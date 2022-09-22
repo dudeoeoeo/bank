@@ -35,12 +35,12 @@ CREATE TABLE bank_record (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 ```
 
-git clone https://github.com/dudeoeoeo/bank -b main
+$ git clone https://github.com/dudeoeoeo/bank -b main
 
 // docker compose 설치 必
 // mysql 은 docker-compose.yml 에 포함
 
-docker-compose up -d
+$ docker-compose up -d
 
 // Public Token 생성
 

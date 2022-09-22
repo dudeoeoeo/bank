@@ -1,0 +1,40 @@
+server:
+  port: 8080
+  servlet:
+    context-page: /
+    encoding:
+      charset: utf-8
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    hikari:
+      connectionTimeout: 30000
+      maximumPoolSize: 10
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    defer-datasource-initialization: true
+    properties:
+      default_batch_fetch_size: 1000
+      hibernate:
+        show_sql: true
+        format_sql: true
+        dialect:
+
+logging:
+  level:
+    org.hibernate.type.descriptor.sql: trace

@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  mysql-bank-container:
+    image: mysql:8
+    container_name: mysql8-bank
+    environment:
+      - MYSQL_DATABASE=bank-db
+      - MYSQL_ROOT_PASSWORD=root1234
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER=bank_user
+      - MYSQL_PASSWORD=bank1234
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_0900_ai_ci']
+    ports:
+      - "33306:3306"
+    restart: always
+    networks:
+      - tera-bank-network
+
+  springboot-bank-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PROFILE: prod
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      BANK_DB_HOST: jdbc:mysql://mysql8-bank:3306/bank-db
+      BANK_DB_USER: bank_user
+      BANK_DB_USER_PASSWORD: bank1234
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-bank-container
+    networks:
+      - tera-bank-network
+
+networks:
+  tera-bank-network:

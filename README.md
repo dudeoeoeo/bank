@@ -36,6 +36,8 @@ CREATE TABLE bank_record (
 ```
 
 $ git clone https://github.com/dudeoeoeo/bank -b main
+$ cd bank
+$ ./gradlew clean build
 
 // docker compose 설치 必
 // mysql 은 docker-compose.yml 에 포함

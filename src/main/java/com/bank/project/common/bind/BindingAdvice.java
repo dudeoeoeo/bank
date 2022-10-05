@@ -1,9 +1,11 @@
 package com.bank.project.common.bind;
 
+import com.bank.project.common.response.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -38,7 +40,6 @@ public class BindingAdvice {
 
                     log.warn("[{}][{}] Field [{}] Message [{}]", type[type.length - 1], method,
                             fieldError.getField(), fieldError.getDefaultMessage());
-
                     throw new RuntimeException(errorMap.toString());
                 }
             }

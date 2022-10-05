@@ -6,8 +6,7 @@ COPY build.gradle .
 COPY settings.gradle .
 COPY src src
 
-RUN chmod +x ./gradlew
-RUN ./gradlew clean build
+RUN chmod +x ./gradlew && ./gradlew clean build
 
 ARG JAR_FILE=build/libs/bank*.jar
 COPY ${JAR_FILE} bank*.jar

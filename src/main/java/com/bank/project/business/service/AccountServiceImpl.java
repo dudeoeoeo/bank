@@ -117,7 +117,7 @@ public class AccountServiceImpl implements AccountService {
             resultCode = remittance(dto);
         } catch (Exception e) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            log.warn("송금 실패 errorCode: {}, request: ", e.getMessage(), dto);
+            log.warn("송금 실패 errorCode: {}, request: {}", e.getMessage(), dto);
             resultCode = e.getMessage();
         }
 
@@ -182,6 +182,7 @@ public class AccountServiceImpl implements AccountService {
         }
 
         if (account.get().getBalance() < balance) {
+            log.warn("withdraw 잔고 부족: {}, {}", account.get().getBalance(), balance);
             throw new RuntimeException(String.valueOf(BankCode.BW90));
         }
 
@@ -200,6 +201,7 @@ public class AccountServiceImpl implements AccountService {
 
         return CompletableFuture.supplyAsync(() -> {
             try {
+                log.info("depositAsync account: {}", depositAccount.get().getUserId());
                 return deposit(depositAccount, dto.getRemittanceBalance());
             } catch (Exception e) {
                 return e.getMessage();
@@ -211,6 +213,7 @@ public class AccountServiceImpl implements AccountService {
 
         return CompletableFuture.supplyAsync(() -> {
             try {
+                log.info("withdrawalAsync account: {}", withdrawalAccount.get().getUserId());
                 return withdraw(withdrawalAccount, dto.getRemittanceBalance());
             } catch (Exception e) {
                 return e.getMessage();
